@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <title>Budget Planner</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        align-items: center;
+      }
+      h1 {
+        align-items: center;
+        margin: auto;
+        padding: 8px;
+      }
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        outline: none;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 320px;
+      }
+      .container h5 {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #000000;
+        color: #ddd;
+        border-radius: 4px;
+      }
+    
+    </style>
+  </head>
+  <body>
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">TEAM BUDGET PLANNER</a>
+      </div>
+    </nav>
+    <br />
+    <div class="container">
+        <h5><b>Add New Deal</b></h5>
+        <label for="dealName">Deal Name:</label>
+        <input type="text" id="dealName" /><br />
+        <label for="expense">Expense:</label>
+        <input type="number" id="expense" /><br />
+        <button class="btn btn-secondary" onclick="addDeal()">Add Deal</button>
+
+        <p id="totalBudget">Total Budget: 0</p>
+    </div>
+
+    <h5><b>List of the Deals</b></h5>
+    <table id="dealsTable">
+      <tr>
+        <th>Deal Name</th>
+        <th>Expense</th>
+      </tr>
+    </table>
+    <footer>&copy; Copyright by Abhisek Dhal</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Array to store deals
+      let deals = [];
+
+      // Function to add a new deal
+      function addDeal() {
+        // Get input values
+        let dealName = document.getElementById("dealName").value;
+        let expense = parseFloat(document.getElementById("expense").value);
+
+        // Create deal object
+        let deal = {
+          name: dealName,
+          expense: expense,
+        };
+
+        // Add deal to array
+        deals.push(deal);
+
+        // Calculate total budget
+        let totalBudget = calculateTotalBudget();
+
+        // Display total budget
+        document.getElementById(
+          "totalBudget"
+        ).innerText = `Total Budget: ${totalBudget}`;
+
+        // Update deals table
+        updateDealsTable();
+
+        // Clear input fields
+        document.getElementById("dealName").value = "";
+        document.getElementById("expense").value = "";
+      }
+
+      // Function to calculate total budget
+      function calculateTotalBudget() {
+        let total = 0;
+        for (let deal of deals) {
+          total += deal.expense;
+        }
+        return total;
+      }
+
+      // Function to update deals table
+      function updateDealsTable() {
+        let table = document.getElementById("dealsTable");
+        table.innerHTML = `
+                <tr>
+                    <th>Deal Name</th>
+                    <th>Expense</th>
+                </tr>
+            `;
+        for (let deal of deals) {
+          table.innerHTML += `
+                    <tr>
+                        <td>${deal.name}</td>
+                        <td>${deal.expense}</td>
+                    </tr>
+                `;
+        }
+      }
+    </script>
+  </body>
+</html>
